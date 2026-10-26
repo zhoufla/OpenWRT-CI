@@ -44,6 +44,10 @@ on:
         required: false
         default: false
         type: boolean
+      WRT_GENERAL:
+        required: false
+        default: true
+        type: boolean
 
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -59,6 +63,7 @@ env:
   WRT_SOURCE: ${{inputs.WRT_SOURCE}}
   WRT_PACKAGE: ${{inputs.WRT_PACKAGE}}
   WRT_TEST: ${{inputs.WRT_TEST}}
+  WRT_GENERAL: ${{inputs.WRT_GENERAL}}
 
 jobs:
   core:
@@ -184,7 +189,8 @@ jobs:
         run: |
           cd ./wrt/
 
-          if [[ "${WRT_CONFIG,,}" == *"test"* ]]; then
+          # TEST 配置或 WRT_GENERAL=false（配置文件自带完整插件集，如 PONWRT）时不追加 GENERAL.txt
+          if [[ "${WRT_CONFIG,,}" == *"test"* || "${WRT_GENERAL,,}" == "false" ]]; then
             cat $GITHUB_WORKSPACE/Config/$WRT_CONFIG.txt >> .config
           else
             cat $GITHUB_WORKSPACE/Config/$WRT_CONFIG.txt $GITHUB_WORKSPACE/Config/GENERAL.txt >> .config

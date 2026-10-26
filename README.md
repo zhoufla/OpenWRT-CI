@@ -1,6 +1,6 @@
 # OpenWRT-CI
 
-基于 [VIKINGYFY/OpenWRT-CI](https://github.com/VIKINGYFY/OpenWRT-CI) 的自用云编译项目，每天北京时间 5:21 自动编译 [VIKINGYFY/immortalwrt](https://github.com/VIKINGYFY/immortalwrt) `owrt` 分支并发布 Release。
+基于 [VIKINGYFY/OpenWRT-CI](https://github.com/VIKINGYFY/OpenWRT-CI) 的自用云编译项目，每天北京时间 5:21 自动编译 [VIKINGYFY/immortalwrt](https://github.com/VIKINGYFY/immortalwrt) `owrt` 分支并发布 Release；[PONWRT-ALL](.github/workflows/PONWRT-ALL.yml) 同时每日编译 [zhoufla/ponwrt](https://github.com/zhoufla/ponwrt) `master`。
 
 # 机型说明
 
@@ -14,6 +14,9 @@
 | OWRT-ALL | Rockchip | NanoPi R2S/R4S/R5S/R6S、NanoPC-T4/T6、FastRhino R66S/R68S、Radxa E20C/E25/E52C、OrangePi 5 系列等 26 款 |
 | | X86_64 | 通用 x86_64（含 mt7915/7921/7925 PCIe 网卡驱动） |
 | | Airoha AN7581 | 全部配置 |
+| PONWRT-ALL | Airoha AN7581 | [ponwrt](https://github.com/zhoufla/ponwrt) 源码：Nokia XG-040G-MD (UBI)，10G PON + 2.5G LAN + NPU 硬件加速 |
+
+PONWRT-ALL 使用 ponwrt 源码自带的完整 `.config`（`Config/PONWRT-AN7581.txt`，与本地已验证构建一致，不追加 GENERAL.txt），插件集与上方清单相同，默认主题同为 aurora。
 
 IPQ60XX / IPQ807X 每种机型发布两个版本：
 
