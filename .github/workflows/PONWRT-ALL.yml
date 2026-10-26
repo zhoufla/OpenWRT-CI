@@ -34,7 +34,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        CONFIG: [PONWRT-AN7581]
+        CONFIG: [PONWRT-AN7581, PONWRT-AN7583]
         SOURCE: [zhoufla/ponwrt]
         BRANCH: [master]
 
