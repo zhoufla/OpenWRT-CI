@@ -14,9 +14,12 @@
 | OWRT-ALL | Rockchip | NanoPi R2S/R4S/R5S/R6S、NanoPC-T4/T6、FastRhino R66S/R68S、Radxa E20C/E25/E52C、OrangePi 5 系列等 26 款 |
 | | X86_64 | 通用 x86_64（含 mt7915/7921/7925 PCIe 网卡驱动） |
 | | Airoha AN7581 | 全部配置 |
-| PONWRT-ALL | Airoha AN7581 | [ponwrt](https://github.com/zhoufla/ponwrt) 源码：Nokia XG-040G-MD (UBI)，10G PON + 2.5G LAN + NPU 硬件加速 |
+| PONWRT-ALL | Airoha AN7581 | [ponwrt](https://github.com/zhoufla/ponwrt) 源码：AN7581 全系机型（10G PON + 2.5G LAN + NPU 硬件加速） |
+| | Airoha AN7583 | Nokia XG-040G-MF（含 UBI 与非 UBI 版本） |
 
-PONWRT-ALL 使用 ponwrt 源码自带的完整 `.config`（`Config/PONWRT-AN7581.txt`，与本地已验证构建一致，不追加 GENERAL.txt），插件集与上方清单相同，默认主题同为 aurora。
+PONWRT-ALL 使用 ponwrt 源码自带的完整 `.config`（`Config/PONWRT-AN7581.txt` / `Config/PONWRT-AN7583.txt`，与本地已验证构建一致，不追加 GENERAL.txt），每个子平台开启 `TARGET_MULTI_PROFILE` + `TARGET_ALL_PROFILES`，一次编译产出该平台全部机型固件；插件集与上方清单相同，默认主题同为 aurora。
+
+PONWRT-ALL 构建时会通过 `Scripts/Patch.sh` 自动给 luci-mod-status 打补丁（`Patches/`），在状态概览页的 CPU 使用率行下方展示 NPU 加速状态（`npu_attached`、GDM2/WAN 端口寄存器、各 PPE 流表配置），数据来自 ponwrt 的 925 PON-PPE 补丁所提供的 `/sys/kernel/debug/ppe/config`。
 
 IPQ60XX / IPQ807X 每种机型发布两个版本：
 
@@ -46,5 +49,7 @@ IPQ60XX / IPQ807X 每种机型发布两个版本：
 |---|---|
 | `.github/workflows` | CI 工作流（WRT-CORE 为公用编译核心） |
 | `Scripts` | 插件拉取、设置、修补脚本 |
+| `Patches` | 构建时自动应用到源码的补丁（目前为 luci-mod-status 的 NPU 状态展示） |
+| `CustomPackages` | 源码树缺失时自动补入的本地软件包 |
 | `Config` | 各平台 .config 配置 |
 | `docs` | 插件清单等文档 |
