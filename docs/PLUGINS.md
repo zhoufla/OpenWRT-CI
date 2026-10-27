@@ -151,20 +151,23 @@ CONFIG_PACKAGE_luci-app-tailscale=y
 `Auto-Clean` 每天 UTC 21:21（北京时间 5:21）运行，清理旧 Release 后，
 通过 `workflow_run` 依次触发以下工作流：
 
-| 工作流 | 平台配置 |
-|---|---|
-| QCA-ALL | IPQ60XX-WIFI-YES、IPQ60XX-WIFI-NO、IPQ807X-WIFI-YES、IPQ807X-WIFI-NO |
-| QCB-ALL | IPQ53XX、IPQ95XX |
-| MTK-ALL | MEDIATEK-WIFI-YES、MEDIATEK-WIFI-NO |
-| OWRT-ALL | AIROHA、ROCKCHIP、X86 |
+| 工作流 | 平台配置 | 源码 |
+|---|---|---|
+| QCA-ALL | IPQ60XX-WIFI-YES、IPQ60XX-WIFI-NO | `VIKINGYFY/immortalwrt` 分支 `owrt` |
+| PONWRT-ALL | PONWRT-AN7581、PONWRT-AN7583 | `zhoufla/ponwrt` 分支 `master` |
+
+AIROHA 平台固件统一由 PONWRT-ALL 编译发布，Release 页展示的「源码/分支/提交」
+取自实际 clone 的仓库与提交，即真实使用的源码（`zhoufla/ponwrt`）。
+
+其余平台（IPQ807X、IPQ53XX、IPQ95XX、MediaTek、Rockchip、X86）已停止每日编译，
+`Config/*.txt` 保留，可通过 `WRT-TEST` 手动校验配置。
 
 所有平台共用默认参数：
 
 | 参数 | 值 |
 |---|---|
-| 源码 | `VIKINGYFY/immortalwrt` 分支 `owrt` |
-| 登录地址 | `192.168.10.1` |
-| 主机名 / WiFi 名 | `OWRT` |
+| 登录地址 | `192.168.10.1`（PONWRT-ALL 为 `192.168.40.1`） |
+| 主机名 / WiFi 名 | `OWRT`（PONWRT-ALL 为 `ponwrt` / `PONWRT`） |
 | WiFi 密码 | `12345678` |
 | 主题 | aurora |
 | 编译产物 | 每设备独立 rootfs（`TARGET_PER_DEVICE_ROOTFS`），不生成 initramfs |

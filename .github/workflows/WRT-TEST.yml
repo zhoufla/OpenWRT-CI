@@ -23,6 +23,8 @@ on:
           - IPQ95XX
           - MEDIATEK-WIFI-NO
           - MEDIATEK-WIFI-YES
+          - PONWRT-AN7581
+          - PONWRT-AN7583
           - ROCKCHIP
           - X86
           - TEST
@@ -33,8 +35,10 @@ on:
         options:
           - VIKINGYFY/immortalwrt
           - immortalwrt/immortalwrt
+          - zhoufla/ponwrt
       BRANCH:
         default: 'owrt'
+        description: '源码分支，zhoufla/ponwrt 使用 master。'
         required: true
         type: string
       PACKAGE:
