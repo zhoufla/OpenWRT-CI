@@ -18,7 +18,7 @@
 
 PONWRT-ALL 使用 ponwrt 源码自带的完整 `.config`（`Config/PONWRT-AN7581.txt` / `Config/PONWRT-AN7583.txt`，与本地已验证构建一致，不追加 GENERAL.txt），每个子平台开启 `TARGET_MULTI_PROFILE` + `TARGET_ALL_PROFILES`，一次编译产出该平台全部机型固件；插件集与上方清单相同，默认主题同为 aurora。
 
-PONWRT-ALL 构建时会通过 `Scripts/Patch.sh` 自动给 luci-mod-status 打补丁（`Patches/`），在状态概览页的 CPU 使用率行下方展示 NPU 加速状态（`npu_attached`、GDM2/WAN 端口寄存器、各 PPE 流表配置），数据来自 ponwrt 的 925 PON-PPE 补丁所提供的 `/sys/kernel/debug/ppe/config`。
+PONWRT-ALL 固件在状态概览页的「CPU 使用率 (%)」行展示 `USR/SYS/PPE` 负载与 Airoha PPE 流表占用，例如 `USR: 6% SYS: 4% PPE: 0/32768 (IPv4: 0 IPv6: 0)`（AN7581 流表容量 32768，AN7583 为 24576）。数据由 ponwrt 的 `target/linux/airoha/base-files/sbin/cpuusage` 提供，首次启动时经 `etc/uci-defaults/992_set-ppe-load.sh` 接入 luci 的 getCPUUsage RPC；在 LuCI「网络 → 防火墙」开启硬件加速（`flow_offloading_hw`）后 PPE/NPU 参与转发，PPE 占用值随之增长。
 
 IPQ60XX / IPQ807X 每种机型发布两个版本：
 
@@ -48,7 +48,7 @@ IPQ60XX / IPQ807X 每种机型发布两个版本：
 |---|---|
 | `.github/workflows` | CI 工作流（WRT-CORE 为公用编译核心） |
 | `Scripts` | 插件拉取、设置、修补脚本 |
-| `Patches` | 构建时自动应用到源码的补丁（目前为 luci-mod-status 的 NPU 状态展示） |
-| `CustomPackages` | 源码树缺失时自动补入的本地软件包 |
+| `Patches` | 构建时自动应用到源码的补丁（当前为空，预留） |
+| `CustomPackages` | 源码树缺失时自动补入的本地软件包（当前为空，预留） |
 | `Config` | 各平台 .config 配置（每日仅编译 IPQ60XX/IPQ807X 与 PONWRT，其余保留供 WRT-TEST 手动校验） |
 | `docs` | 插件清单等文档 |
