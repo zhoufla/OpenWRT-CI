@@ -153,13 +153,13 @@ CONFIG_PACKAGE_luci-app-tailscale=y
 
 | 工作流 | 平台配置 | 源码 |
 |---|---|---|
-| QCA-ALL | IPQ60XX-WIFI-YES、IPQ60XX-WIFI-NO | `VIKINGYFY/immortalwrt` 分支 `owrt` |
+| QCA-ALL | IPQ60XX-WIFI-YES、IPQ60XX-WIFI-NO、IPQ807X-WIFI-YES、IPQ807X-WIFI-NO | `VIKINGYFY/immortalwrt` 分支 `owrt` |
 | PONWRT-ALL | PONWRT-AN7581、PONWRT-AN7583 | `zhoufla/ponwrt` 分支 `master` |
 
 AIROHA 平台固件统一由 PONWRT-ALL 编译发布，Release 页展示的「源码/分支/提交」
 取自实际 clone 的仓库与提交，即真实使用的源码（`zhoufla/ponwrt`）。
 
-其余平台（IPQ807X、IPQ53XX、IPQ95XX、MediaTek、Rockchip、X86）已停止每日编译，
+其余平台（IPQ53XX、IPQ95XX、MediaTek、Rockchip、X86）已停止每日编译，
 `Config/*.txt` 保留，可通过 `WRT-TEST` 手动校验配置。
 
 所有平台共用默认参数：

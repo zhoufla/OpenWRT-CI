@@ -1,17 +1,18 @@
 # OpenWRT-CI
 
-基于 [VIKINGYFY/OpenWRT-CI](https://github.com/VIKINGYFY/OpenWRT-CI) 的自用云编译项目，每天北京时间 5:21 自动编译并发布 Release，仅保留两个平台：
+基于 [VIKINGYFY/OpenWRT-CI](https://github.com/VIKINGYFY/OpenWRT-CI) 的自用云编译项目，每天北京时间 5:21 自动编译并发布 Release，仅保留以下平台：
 
-- **IPQ60XX**（[QCA-ALL](.github/workflows/QCA-ALL.yml)）：[VIKINGYFY/immortalwrt](https://github.com/VIKINGYFY/immortalwrt) `owrt` 分支
+- **IPQ60XX / IPQ807X**（[QCA-ALL](.github/workflows/QCA-ALL.yml)）：[VIKINGYFY/immortalwrt](https://github.com/VIKINGYFY/immortalwrt) `owrt` 分支
 - **AIROHA**（[PONWRT-ALL](.github/workflows/PONWRT-ALL.yml)）：[zhoufla/ponwrt](https://github.com/zhoufla/ponwrt) `master`，Release 页展示的「源码/分支/提交」即实际编译所用源码
 
-其余平台（IPQ807X、IPQ53XX、IPQ95XX、MediaTek、Rockchip、X86）已停止每日编译；对应 `Config/*.txt` 保留，可通过 [WRT-TEST](.github/workflows/WRT-TEST.yml) 手动校验配置。
+其余平台（IPQ53XX、IPQ95XX、MediaTek、Rockchip、X86）已停止每日编译；对应 `Config/*.txt` 保留，可通过 [WRT-TEST](.github/workflows/WRT-TEST.yml) 手动校验配置。
 
 # 机型说明
 
 | 工作流 | 平台 | 机型 |
 |---|---|---|
 | QCA-ALL | IPQ60XX | 京东云 RE-CS-02（亚瑟）、RE-CS-07（百里）、RE-SS-01 |
+| | IPQ807X | 阿里云 AP8220 |
 | PONWRT-ALL | Airoha AN7581 | [ponwrt](https://github.com/zhoufla/ponwrt) 源码：AN7581 全系机型（10G PON + 2.5G LAN + NPU 硬件加速） |
 | | Airoha AN7583 | Nokia XG-040G-MF（含 UBI 与非 UBI 版本） |
 
@@ -19,7 +20,7 @@ PONWRT-ALL 使用 ponwrt 源码自带的完整 `.config`（`Config/PONWRT-AN7581
 
 PONWRT-ALL 构建时会通过 `Scripts/Patch.sh` 自动给 luci-mod-status 打补丁（`Patches/`），在状态概览页的 CPU 使用率行下方展示 NPU 加速状态（`npu_attached`、GDM2/WAN 端口寄存器、各 PPE 流表配置），数据来自 ponwrt 的 925 PON-PPE 补丁所提供的 `/sys/kernel/debug/ppe/config`。
 
-IPQ60XX 每种机型发布两个版本：
+IPQ60XX / IPQ807X 每种机型发布两个版本：
 
 - **WIFI-YES**：带 WiFi 驱动，正常无线路由用法
 - **WIFI-NO**：去除 WiFi 驱动并将 DTS 替换为 nowifi 版本，释放 Q6 固件内存，适合有线路由 / 旁路由用法
@@ -49,5 +50,5 @@ IPQ60XX 每种机型发布两个版本：
 | `Scripts` | 插件拉取、设置、修补脚本 |
 | `Patches` | 构建时自动应用到源码的补丁（目前为 luci-mod-status 的 NPU 状态展示） |
 | `CustomPackages` | 源码树缺失时自动补入的本地软件包 |
-| `Config` | 各平台 .config 配置（每日仅编译 IPQ60XX 与 PONWRT，其余保留供 WRT-TEST 手动校验） |
+| `Config` | 各平台 .config 配置（每日仅编译 IPQ60XX/IPQ807X 与 PONWRT，其余保留供 WRT-TEST 手动校验） |
 | `docs` | 插件清单等文档 |
