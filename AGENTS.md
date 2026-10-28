@@ -8,7 +8,7 @@
 
 ## 环境备注
 
-- 本机 `/etc/ssh` 配置属主异常，直接 push/fetch 会报 `Bad owner or permissions on /etc/ssh/ssh_config.d/20-systemd-ssh-proxy.conf`；统一使用 `GIT_SSH_COMMAND='ssh -F ~/.ssh/config' git fetch/push ...` 绕过系统级 ssh 配置。
+- 本机 `/etc/ssh` 配置属主异常（`nobody:nogroup`，因根分区只读镜像打包时 uid 映射丢失；根分区 ro，`chown` 无法修复，勿尝试），直接 push/fetch 会报 `Bad owner or permissions on /etc/ssh/ssh_config.d/20-systemd-ssh-proxy.conf`；统一使用 `GIT_SSH_COMMAND='ssh -F ~/.ssh/config' git fetch/push ...` 绕过系统级 ssh 配置。
 
 ## 项目决策（勿随上游漂移）
 
