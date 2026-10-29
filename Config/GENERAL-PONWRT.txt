@@ -41,3 +41,5 @@ CONFIG_PACKAGE_kmod-nft-tproxy=y
 CONFIG_PACKAGE_stuntman-client=y
 #内核组件（AN7583 子平台已无 profile 默认提供，显式保留；AN7581 自动选中）
 CONFIG_PACKAGE_kmod-nf-conntrack-bridge=y
+#EIP93 硬件加密引擎（IPsec authenc 卸载；短包自动回退软件 AES）
+CONFIG_PACKAGE_kmod-crypto-hw-eip93=y
