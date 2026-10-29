@@ -19,7 +19,7 @@
 > IPQ60XX 固件文件名按 profile 命名：`jdcloud_re-ss-01-*`（亚瑟）、`jdcloud_re-cs-02-*`（雅典娜）、`jdcloud_re-cs-07-*`（太乙）。
 > 太乙（RE-CS-07）无无线硬件，仅在 WIFI-NO 版本中产出（与上游配置一致）；AX6000 百里（MT7986A 平台）不在编译范围。
 
-PONWRT-ALL 使用 ponwrt 源码自带的完整 `.config`（`Config/PONWRT-AN7581.txt` / `Config/PONWRT-AN7583.txt`，与本地已验证构建一致，不追加 GENERAL.txt），每个子平台开启 `TARGET_MULTI_PROFILE` + `TARGET_ALL_PROFILES`，一次编译产出该平台全部机型固件；插件集与上方清单相同，默认主题同为 aurora。
+PONWRT-ALL 的配置与 QCA-ALL 一样按机型与插件拆分维护：`Config/PONWRT-AN7581.txt` / `Config/PONWRT-AN7583.txt` 仅保留机型选择（`TARGET_MULTI_PROFILE` + `TARGET_ALL_PROFILES`，一次编译产出该平台全部机型固件），插件集中在 ponwrt 专用的 `Config/GENERAL-PONWRT.txt`（与 QCA 平台用的 `GENERAL.txt` 分开维护，pon 驱动/用户态 feed 保持开启），由 WRT-CORE 按 `WRT_GENERAL_FILE` 指定的通用文件合并后 `make defconfig` 补全；插件集与上方清单相同，默认主题同为 aurora。
 
 PONWRT-ALL 固件在状态概览页的「CPU 使用率 (%)」行展示 `USR/SYS/PPE` 负载与 Airoha PPE 流表占用，例如 `USR: 6% SYS: 4% PPE: 0/32768 (IPv4: 0 IPv6: 0)`（AN7581 流表容量 32768，AN7583 为 24576）。数据由 ponwrt 的 `target/linux/airoha/base-files/sbin/cpuusage` 提供，首次启动时经 `etc/uci-defaults/992_set-ppe-load.sh` 接入 luci 的 getCPUUsage RPC；在 LuCI「网络 → 防火墙」开启硬件加速（`flow_offloading_hw`）后 PPE/NPU 参与转发，PPE 占用值随之增长。
 

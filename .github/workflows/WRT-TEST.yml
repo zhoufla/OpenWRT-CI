@@ -85,3 +85,5 @@ jobs:
       WRT_PACKAGE: ${{inputs.PACKAGE}}
       #仅输出配置文件
       WRT_TEST: ${{inputs.TEST || false}}
+      #通用插件配置（PONWRT 机型自动使用 ponwrt 专用文件，其余用 GENERAL.txt）
+      WRT_GENERAL_FILE: ${{ startsWith(inputs.CONFIG, 'PONWRT') && 'GENERAL-PONWRT' || 'GENERAL' }}

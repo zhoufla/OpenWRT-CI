@@ -41,7 +41,7 @@ jobs:
     #调用公用编译核心WRT-CORE.yml
     uses: ./.github/workflows/WRT-CORE.yml
     with:
-      #编译配置（完整 .config，不追加 GENERAL.txt）
+      #编译配置（机型配置，插件集中在 GENERAL-PONWRT.txt）
       WRT_CONFIG: ${{matrix.CONFIG}}
       #默认主题
       WRT_THEME: aurora
@@ -65,5 +65,5 @@ jobs:
       WRT_PACKAGE: ${{inputs.PACKAGE}}
       #仅输出配置文件
       WRT_TEST: ${{inputs.TEST || false}}
-      #配置文件为完整 .config，跳过 GENERAL.txt 追加
-      WRT_GENERAL: false
+      #通用插件配置（ponwrt 专用，与 QCA 的 GENERAL.txt 分开维护）
+      WRT_GENERAL_FILE: GENERAL-PONWRT

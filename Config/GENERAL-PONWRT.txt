@@ -1,0 +1,35 @@
+#科学插件调整（ponwrt 专用通用配置，与 QCA 平台的 GENERAL.txt 分开维护）
+CONFIG_PACKAGE_luci-app-homeproxy=y
+#增加插件
+CONFIG_PACKAGE_luci-app-autoreboot=y
+CONFIG_PACKAGE_luci-app-cpufreq=y
+CONFIG_PACKAGE_luci-app-ddns-go=y
+CONFIG_PACKAGE_luci-app-iptv=y
+CONFIG_PACKAGE_luci-app-mini-diskmanager=y
+CONFIG_PACKAGE_luci-app-msd_lite=y
+CONFIG_PACKAGE_luci-app-natmapt=y
+CONFIG_PACKAGE_natmapt-notify-script-telegram=y
+CONFIG_PACKAGE_luci-app-samba4=y
+CONFIG_PACKAGE_luci-app-uhttpd=y
+CONFIG_PACKAGE_luci-app-zerotier=y
+CONFIG_PACKAGE_luci-proto-wireguard=y
+#删除插件
+CONFIG_PACKAGE_luci-app-attendedsysupgrade=n
+CONFIG_PACKAGE_luci-app-wol=n
+CONFIG_PACKAGE_luci-app-vlmcsd=n
+#参数调整（pon feed 必须开启，与 GENERAL.txt 的关闭行为相反）
+CONFIG_CCACHE=y
+CONFIG_DEVEL=y
+CONFIG_FEED_packages=y
+CONFIG_FEED_luci=y
+CONFIG_FEED_routing=y
+CONFIG_FEED_telephony=y
+CONFIG_FEED_video=y
+CONFIG_FEED_pon_drivers=y
+CONFIG_FEED_pon_userspace=y
+CONFIG_TARGET_ROOTFS_INITRAMFS=y
+CONFIG_OVERRIDE_PKGS="ddns-go luci-app-ddns-go"
+#组件调整（其余依赖由 make defconfig 自动带出）
+CONFIG_PACKAGE_automount=y
+CONFIG_PACKAGE_curl=y
+CONFIG_PACKAGE_wireguard-tools=y

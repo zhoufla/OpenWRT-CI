@@ -10,7 +10,7 @@
 
 | 层 | 位置 | 作用范围 |
 |---|---|---|
-| 1 | `Config/GENERAL.txt` | 所有平台共用，追加到每个非 TEST 配置之后（`WRT-CORE.yml` 的 Custom Settings 步骤） |
+| 1 | `Config/GENERAL.txt`（QCA 平台）/ `Config/GENERAL-PONWRT.txt`（PONWRT 平台） | 通用插件，由 `WRT_GENERAL_FILE` 指定，追加到对应非 TEST 配置之后（`WRT-CORE.yml` 的 Custom Settings 步骤） |
 | 2 | `Config/平台.txt` | 各平台/机型专属（设备列表、WiFi 驱动、平台硬件支持） |
 | 3 | `Scripts/Settings.sh` | 强制追加 `luci`、简体中文语言包、`luci-theme-aurora`、`luci-app-aurora-config` |
 
@@ -21,12 +21,14 @@
 
 配置合并规则（`WRT-CORE.yml`）：
 
-- 配置名包含 `test`（如 `TEST.txt`）→ 只用该文件，**不合并** GENERAL.txt
-- 其余配置 → `Config/<配置名>.txt` + `Config/GENERAL.txt` 合并
+- 配置名包含 `test`（如 `TEST.txt`）→ 只用该文件，**不合并**通用配置
+- 其余配置 → `Config/<配置名>.txt` + 通用配置合并；通用配置由 `WRT_GENERAL_FILE` 指定：
+  - QCA 等配置（默认）→ `Config/GENERAL.txt`
+  - `PONWRT-*` 配置（`PONWRT-ALL.yml` 显式指定，`WRT-TEST.yml` 按前缀自动派生）→ `Config/GENERAL-PONWRT.txt`
 
-## 二、通用插件（所有平台固件均包含）
+## 二、通用插件（QCA 平台固件均包含）
 
-来源：`Config/GENERAL.txt`
+来源：`Config/GENERAL.txt`。PONWRT 平台的通用插件见 `Config/GENERAL-PONWRT.txt`，差异在本节末尾。
 
 ### 网络与代理
 
@@ -76,12 +78,26 @@
 | `luci-app-wol` | `=n` | 原版网络唤醒，已被 wolultra 取代 |
 | `luci-app-attendedsysupgrade` | `=n` | 在线升级；`Settings.sh` 同时从 feeds 的 luci collections 中删除该项，避免被集合依赖重新引入 |
 
+### PONWRT 平台差异（GENERAL-PONWRT.txt）
+
+`Config/GENERAL-PONWRT.txt` 是 ponwrt 源码专用的通用配置，与 QCA 的 `GENERAL.txt` 分开维护：
+
+| 项 | 内容 |
+|---|---|
+| 代理 | `luci-app-homeproxy`（同 QCA，sing-box 内核） |
+| 插件 | `luci-app-natmapt` + Telegram 通知、`luci-app-ddns-go`、`luci-app-autoreboot`、`luci-app-mini-diskmanager`、`luci-app-msd_lite`、`luci-app-samba4`、`luci-app-uhttpd`、`luci-app-zerotier`、`luci-app-iptv`、`luci-app-cpufreq`、`luci-proto-wireguard` |
+| 组件 | `automount`、`curl`、`wireguard-tools`（其余依赖由 `make defconfig` 自动带出） |
+| 关闭 | `luci-app-vlmcsd`、`luci-app-wol`、`luci-app-attendedsysupgrade`（与 QCA 相同） |
+| 参数 | `CONFIG_FEED_pon_drivers/pon_userspace=y`（pon feed 必须开启，与 QCA 的 `=n` 相反）、`CONFIG_TARGET_ROOTFS_INITRAMFS=y`、`CONFIG_OVERRIDE_PKGS="ddns-go luci-app-ddns-go"`（用克隆版覆盖 feeds 里的 ddns-go）、`CCACHE`/`DEVEL` |
+| 相对 QCA 少 | `luci-app-upnp`、`luci-app-wolultra`、fullconenat-sonic 与各 kmod/组件清单（PONWRT 的内核组件由 ponwrt 源码 target 默认提供） |
+
 ## 三、平台专属差异
 
-各平台配置相对 GENERAL.txt 的差异（已用 diff 核实）：
+各平台机型配置相对其通用配置（QCA 为 `GENERAL.txt`，PONWRT 为 `GENERAL-PONWRT.txt`）的差异（已用 diff 核实）：
 
 | 配置 | 差异内容 | 说明 |
 |---|---|---|
+| `PONWRT-AN7581` / `PONWRT-AN7583` | 仅 `CONFIG_TARGET_airoha(_an7581/_an7583)` + `TARGET_MULTI_PROFILE` + `TARGET_ALL_PROFILES` | 一次构建子平台全部机型；TF-A/U-Boot/NPU 固件由 profile 默认值自动选择 |
 | `IPQ60XX-WIFI-NO` | 显式关闭 `kmod-ath`、`kmod-ath11k(-ahb/-pci)` 及 ath11k 固件 | 无 WiFi 编译；`Settings.sh` 会将 DTS 替换为 `ipq6018-nowifi.dtsi`，释放 Q6 内存 |
 | `IPQ807X-WIFI-NO` | 同上（另有 `ath10k-firmware-qca9887`） | 同上，DTS 替换为 `ipq8074-nowifi.dtsi` |
 | `IPQ60XX-WIFI-YES` / `IPQ807X-WIFI-YES` | 无额外包 | WiFi 驱动由平台默认配置提供 |
@@ -144,7 +160,7 @@ CONFIG_PACKAGE_luci-app-tailscale=y
 ```
 
 或新建 `Config/PRIVATE.txt`（`Settings.sh` 自动合并，当前不存在），
-用于本地长期私有配置，不必写入 GENERAL.txt。
+用于本地长期私有配置，不必写入平台通用配置（QCA 为 `GENERAL.txt`，PONWRT 为 `GENERAL-PONWRT.txt`）。
 
 ## 七、当前会运行的编译任务
 
@@ -170,4 +186,4 @@ AIROHA 平台固件统一由 PONWRT-ALL 编译发布，Release 页展示的「�
 | 主机名 / WiFi 名 | `OWRT`（PONWRT-ALL 为 `ponwrt` / `PONWRT`） |
 | WiFi 密码 | `12345678` |
 | 主题 | aurora |
-| 编译产物 | 每设备独立 rootfs（`TARGET_PER_DEVICE_ROOTFS`），不生成 initramfs |
+| 编译产物 | QCA 平台每设备独立 rootfs（`TARGET_PER_DEVICE_ROOTFS`）且不生成 initramfs（`GENERAL.txt`）；PONWRT 平台按源码默认（生成 initramfs，未启用每设备独立 rootfs） |

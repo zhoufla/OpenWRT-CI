@@ -48,6 +48,10 @@ on:
         required: false
         default: true
         type: boolean
+      WRT_GENERAL_FILE:
+        required: false
+        default: GENERAL
+        type: string
 
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -64,6 +68,7 @@ env:
   WRT_PACKAGE: ${{inputs.WRT_PACKAGE}}
   WRT_TEST: ${{inputs.WRT_TEST}}
   WRT_GENERAL: ${{inputs.WRT_GENERAL}}
+  WRT_GENERAL_FILE: ${{inputs.WRT_GENERAL_FILE}}
 
 jobs:
   core:
@@ -196,11 +201,12 @@ jobs:
         run: |
           cd ./wrt/
 
-          # TEST 配置或 WRT_GENERAL=false（配置文件自带完整插件集，如 PONWRT）时不追加 GENERAL.txt
+          # TEST 配置或 WRT_GENERAL=false（配置文件自带完整插件集）时不追加通用配置
+          # 其余配置按 WRT_GENERAL_FILE 指定的通用文件合并（QCA 用 GENERAL.txt，PONWRT 用 GENERAL-PONWRT.txt）
           if [[ "${WRT_CONFIG,,}" == *"test"* || "${WRT_GENERAL,,}" == "false" ]]; then
             cat $GITHUB_WORKSPACE/Config/$WRT_CONFIG.txt >> .config
           else
-            cat $GITHUB_WORKSPACE/Config/$WRT_CONFIG.txt $GITHUB_WORKSPACE/Config/GENERAL.txt >> .config
+            cat $GITHUB_WORKSPACE/Config/$WRT_CONFIG.txt $GITHUB_WORKSPACE/Config/$WRT_GENERAL_FILE.txt >> .config
           fi
 
           $GITHUB_WORKSPACE/Scripts/Settings.sh
