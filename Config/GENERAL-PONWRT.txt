@@ -41,3 +41,6 @@ CONFIG_PACKAGE_kmod-nft-tproxy=y
 CONFIG_PACKAGE_stuntman-client=y
 #内核组件（AN7583 子平台已无 profile 默认提供，显式保留；AN7581 自动选中）
 CONFIG_PACKAGE_kmod-nf-conntrack-bridge=y
+#声卡驱动禁用（ponwrt/immortalwrt 两源内核 CONFIG_SOUND 均为 not set，包层默认无声卡；显式 =n 防上游默认漂移）
+CONFIG_PACKAGE_kmod-sound-core=n
+CONFIG_PACKAGE_kmod-usb-audio=n
