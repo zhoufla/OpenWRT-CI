@@ -137,7 +137,7 @@
 
 | 分类 | 插件 |
 |---|---|
-| 主题 | argon、fluent、footstrap、kucat、kucat-config、shadcn |
+| 主题 | argon、fluent、footstrap、kucat、kucat-config、shadcn、vantage（上游新默认主题，本项目沿用 aurora，故仅克隆备用） |
 | 代理 | momo、nikki、openclash |
 | 存储/下载 | diskman（sbwml 版）、openlist2、qbittorrent、quickfile、mosdns |
 | sirpdboy 系列 | netspeedtest、netwizard、timecontrol（partexp 仅 TEST 配置用） |
@@ -145,8 +145,8 @@
 | 其他 | easytier、vnt、qmodem、`luci-app-tailscale`（本地自定义条目） |
 
 其中 `viking` 条目（`VIKINGYFY/packages`）特殊：克隆前会先从 feeds 删除
-`axonhub gecoosac sing-box luci-app-homeproxy luci-app-timewol luci-app-wolplus luci-app-wolultra`
-对应的原版目录，再整体克隆——因此固件里的 `homeproxy` 与 `wolultra` 实际来自
+`axonhub gecoosac miniupnpd sing-box luci-app-homeproxy luci-app-timewol luci-app-upnp luci-app-wolplus luci-app-wolultra`
+对应的原版目录，再整体克隆——因此固件里的 `homeproxy`、`upnp` 与 `wolultra` 实际来自
 VIKINGYFY 的修改版仓库，而非官方 feeds。
 
 ## 六、如何临时增减插件
