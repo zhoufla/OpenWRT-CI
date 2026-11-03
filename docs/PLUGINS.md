@@ -175,6 +175,12 @@ CONFIG_PACKAGE_luci-app-tailscale=y
 AIROHA 平台固件统一由 PONWRT-ALL 编译发布，Release 页展示的「源码/分支/提交」
 取自实际 clone 的仓库与提交，即真实使用的源码（`zhoufla/ponwrt`）。
 
+`Auto-Clean` 只保留最近 1 个 Release（`releases_keep_latest: 1`），被删版本对应的
+Tag 一并删除；由于现在每周只编译一次，保留上一版可避免当周编译失败时整周无固件可用。
+
+`Cache-Clean` 每月 1 日 UTC 20:00（北京时间 2 日 4 点）清理全部构建缓存，频率低于周构建，
+使周编译能复用上次的 ccache；配合 `WRT-CORE` 的 `cache-rollover` 分代清理控制缓存体积。
+
 其余平台（IPQ53XX、IPQ95XX、MediaTek、Rockchip、X86）已停止定期编译，
 `Config/*.txt` 保留，可通过 `WRT-TEST` 手动校验配置。
 

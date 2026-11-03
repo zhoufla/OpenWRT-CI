@@ -4,9 +4,9 @@
 name: Cache-Clean
 
 on:
-  #自动清理：每周一早上4点
+  #自动清理：每月 1 日 UTC 20:00（北京时间 2 日 4 点），避免周构建前的缓存被清空
   schedule:
-    - cron: 0 20 * * 0
+    - cron: 0 20 1 * *
   #手动清理
   workflow_dispatch:
 

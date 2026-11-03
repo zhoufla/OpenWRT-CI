@@ -16,5 +16,6 @@
 - AIROHA 平台固件统一由 PONWRT-ALL 用 zhoufla/ponwrt 源码发布，不采用上游 VIKINGYFY 源码的 AIROHA 构建（`AIROHA-ALL.yml`），避免同源重复编译。
 - 默认主题保持 aurora + aurora-config，不跟随上游换 vantage；`Settings.sh` 中主题配套应用行保留（aurora 无对应包时 defconfig 自动忽略）。
 - Release 页「源码/分支/提交」必须展示实际 clone 编译的源码（WRT-CORE 从真实 clone 取值，勿改回硬编码）。
+- `Auto-Clean` 保留最近 1 个 Release（`releases_keep_latest: 1`），构建失败时仍有上一版可用；`Cache-Clean` 为每月 1 日（UTC 20:00）清理缓存，不要改回每周，否则每次周构建都会是冷编译。
 - 停编平台的 `Config/*.txt` 保留，供 WRT-TEST 手动校验，不删除。
 - 同步上游 VIKINGYFY/OpenWRT-CI 时按需 cherry-pick / 手动合并，不整仓 merge，避免带回已删除的工作流与不需要的平台。

@@ -21,7 +21,9 @@ jobs:
         with:
           gh_token: ${{secrets.GITHUB_TOKEN}}
           delete_releases: true
-          releases_keep_latest: 0
+          #保留最近 1 个 Release：周构建失败时仍能取到上一版固件
+          releases_keep_latest: 1
+          #仅删除被删 Release 关联的 Tag，保留版本的 Tag 不受影响
           delete_tags: true
           delete_workflows: true
           workflows_keep_day: 0
