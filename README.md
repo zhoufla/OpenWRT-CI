@@ -1,11 +1,11 @@
 # OpenWRT-CI
 
-基于 [VIKINGYFY/OpenWRT-CI](https://github.com/VIKINGYFY/OpenWRT-CI) 的自用云编译项目，每天北京时间 5:21 自动编译并发布 Release，仅保留以下平台：
+基于 [VIKINGYFY/OpenWRT-CI](https://github.com/VIKINGYFY/OpenWRT-CI) 的自用云编译项目，每周一北京时间 5:21 自动编译并发布 Release，仅保留以下平台：
 
 - **IPQ60XX / IPQ807X**（[QCA-ALL](.github/workflows/QCA-ALL.yml)）：[VIKINGYFY/immortalwrt](https://github.com/VIKINGYFY/immortalwrt) `owrt` 分支
 - **AIROHA**（[PONWRT-ALL](.github/workflows/PONWRT-ALL.yml)）：[zhoufla/ponwrt](https://github.com/zhoufla/ponwrt) `master`，Release 页展示的「源码/分支/提交」即实际编译所用源码
 
-其余平台（IPQ53XX、IPQ95XX、MediaTek、Rockchip、X86）已停止每日编译；对应 `Config/*.txt` 保留，可通过 [WRT-TEST](.github/workflows/WRT-TEST.yml) 手动校验配置。
+其余平台（IPQ53XX、IPQ95XX、MediaTek、Rockchip、X86）已停止定期编译；对应 `Config/*.txt` 保留，可通过 [WRT-TEST](.github/workflows/WRT-TEST.yml) 手动校验配置。
 
 # 机型说明
 
@@ -53,5 +53,5 @@ IPQ60XX / IPQ807X 每种机型发布两个版本：
 | `Scripts` | 插件拉取、设置、修补脚本 |
 | `Patches` | 构建时自动应用到源码的补丁（当前为空，预留） |
 | `CustomPackages` | 源码树缺失时自动补入的本地软件包（当前为空，预留） |
-| `Config` | 各平台 .config 配置（每日仅编译 IPQ60XX/IPQ807X 与 PONWRT，其余保留供 WRT-TEST 手动校验） |
+| `Config` | 各平台 .config 配置（每周仅编译 IPQ60XX/IPQ807X 与 PONWRT，其余保留供 WRT-TEST 手动校验） |
 | `docs` | 插件清单等文档 |

@@ -164,7 +164,7 @@ CONFIG_PACKAGE_luci-app-tailscale=y
 
 ## 七、当前会运行的编译任务
 
-`Auto-Clean` 每天 UTC 21:21（北京时间 5:21）运行，清理旧 Release 后，
+`Auto-Clean` 每周一北京时间 5:21（UTC 周日 21:21）运行，清理旧 Release 后，
 通过 `workflow_run` 依次触发以下工作流：
 
 | 工作流 | 平台配置 | 源码 |
@@ -175,7 +175,7 @@ CONFIG_PACKAGE_luci-app-tailscale=y
 AIROHA 平台固件统一由 PONWRT-ALL 编译发布，Release 页展示的「源码/分支/提交」
 取自实际 clone 的仓库与提交，即真实使用的源码（`zhoufla/ponwrt`）。
 
-其余平台（IPQ53XX、IPQ95XX、MediaTek、Rockchip、X86）已停止每日编译，
+其余平台（IPQ53XX、IPQ95XX、MediaTek、Rockchip、X86）已停止定期编译，
 `Config/*.txt` 保留，可通过 `WRT-TEST` 手动校验配置。
 
 所有平台共用默认参数：
