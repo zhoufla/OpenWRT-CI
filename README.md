@@ -67,6 +67,6 @@ IPQ60XX / IPQ807X 每种机型发布两个版本：
 | `Patches` | 构建时自动应用到源码的补丁（当前为空，预留） |
 | `DTS` | WIFI-NO 用的 DTS 覆写片段（`ipq6018-nowifi.dtsi`），由 `Scripts/Settings.sh` 在构建时拷入源码树并追加到设备 dts |
 | `CustomPackages` | 源码树缺失时自动补入的本地软件包（当前为空，预留） |
-| `Files` | 构建时注入固件的额外文件（仅 qualcommax）：PCDN IPv6 放行规则与 hotplug，`etc/sysctl.d/99-pcdn-conntrack.conf`（UDP 连接跟踪 30/60） |
+| `Files` | 构建时注入固件的额外文件（仅 qualcommax）：PCDN IPv6 放行规则与 hotplug，`etc/sysctl.d/99-pcdn-conntrack-qca.conf`（UDP 连接跟踪 30/60） |
 | `Config` | 各平台 .config 配置（每周仅编译 IPQ60XX/IPQ807X 与 PONWRT，其余保留供 WRT-TEST 手动校验） |
 | `docs` | 插件清单等文档 |
